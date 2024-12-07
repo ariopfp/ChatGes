@@ -3,18 +3,20 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class ChatGes {
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Chat Group");
+    public ChatGes(String username, Color themeColor){
+        System.out.println("Initializing ChatGes for user: " + username + ",theme color: " + themeColor);
+
+        JFrame frame = new JFrame("Chat Group-" + username);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 600);
         frame.setLayout(new BorderLayout());
 
         JPanel headerPanel = new JPanel();
-        headerPanel.setBackground(Color.GREEN);
+        headerPanel.setBackground(themeColor);
         headerPanel.setPreferredSize(new Dimension(frame.getWidth(), 50));
         headerPanel.setLayout(new BorderLayout());
 
-        JLabel titleLabel = new JLabel("Chat Group", JLabel.LEFT);
+        JLabel titleLabel = new JLabel("Chat Group :" + username, JLabel.LEFT);
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
         headerPanel.add(titleLabel, BorderLayout.CENTER);
@@ -42,7 +44,7 @@ public class ChatGes {
         footerPanel.add(textField, BorderLayout.CENTER);
 
         JButton sendButton = new JButton("Send");
-        sendButton.setBackground(Color.GREEN);
+        sendButton.setBackground(themeColor);
         sendButton.setForeground(Color.WHITE);
         footerPanel.add(sendButton, BorderLayout.EAST);
 
@@ -50,14 +52,11 @@ public class ChatGes {
         frame.add(chatPanel, BorderLayout.CENTER);
         frame.add(footerPanel, BorderLayout.SOUTH);
 
-        sendButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String message = textField.getText().trim();
-                if (!message.isEmpty()) {
-                    chatArea.append("You: " + message + "\n"); 
-                    textField.setText(""); 
-                }
+        sendButton.addActionListener(e -> {
+            String message = textField.getText().trim();
+            if (!message.isEmpty()) {
+                chatArea.append(username + ": " + message + "\n"); 
+                textField.setText(""); 
             }
         });
 
